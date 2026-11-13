@@ -1,30 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl"
-       version="1.0.2"
+       version="1.0"
        class="in-text"
        default-locale="en-US">
 
   <info>
-    <title>Nano Energy + IEEE Bibliography ZQ</title>
-    <id>http://www.zotero.org/styles/nano-energy-ieee-zq-v3</id>
-    <link href="http://www.zotero.org/styles/nano-energy-ieee-zq-v3" rel="self"/>
+    <title>Nano Energy Citations + IEEE Bibliography ZQ</title>
+    <id>http://www.zotero.org/styles/nano-energy-ieee-zq-v4</id>
+    <link href="http://www.zotero.org/styles/nano-energy-ieee-zq-v4" rel="self"/>
     <author>
       <name>Custom style prepared for ZQ</name>
     </author>
     <category citation-format="numeric"/>
     <category field="engineering"/>
-    <summary>
-      Square bracket citations with compressed numerical ranges
-      and IEEE-inspired bibliography formatting.
-    </summary>
+    <summary>Square bracket citations with collapsed numerical ranges and IEEE-inspired bibliography.</summary>
     <updated>2026-11-13T00:00:00+00:00</updated>
   </info>
 
-  <!-- AUTHOR FORMAT -->
+  <!-- AUTHORS -->
   <macro name="author">
-    <names variable="author"
-           et-al-min="7"
-           et-al-use-first="6">
+    <names variable="author">
       <name initialize-with=". "
             delimiter=", "
             and="text"
@@ -56,11 +51,18 @@
   </macro>
 
   <!-- PAGES OR ARTICLE NUMBER -->
-  <macro name="pages">
-    <text variable="page"/>
+  <macro name="pages-or-number">
+    <choose>
+      <if variable="page">
+        <text variable="page" prefix="pp. "/>
+      </if>
+      <else-if variable="number">
+        <text variable="number" prefix="Art. no. "/>
+      </else-if>
+    </choose>
   </macro>
 
-  <!-- YEAR -->
+  <!-- PUBLICATION YEAR -->
   <macro name="year">
     <date variable="issued">
       <date-part name="year"/>
@@ -86,29 +88,29 @@
     </layout>
   </citation>
 
-  <!-- BIBLIOGRAPHY -->
-  <bibliography second-field-align="flush">
+  <!-- IEEE-INSPIRED BIBLIOGRAPHY -->
+  <bibliography et-al-min="7"
+                et-al-use-first="6"
+                second-field-align="flush">
     <sort>
       <key variable="citation-number"/>
     </sort>
     <layout>
       <text variable="citation-number" prefix="[" suffix="] "/>
       <text macro="author" suffix=", "/>
-
       <choose>
         <if type="article-journal">
           <group delimiter=", ">
             <text macro="article-title"/>
             <text macro="journal-title"/>
             <text macro="volume-issue"/>
-            <text macro="pages"/>
+            <text macro="pages-or-number"/>
             <text macro="year"/>
           </group>
           <text value="."/>
           <text macro="doi" prefix=" "/>
           <text value="."/>
         </if>
-
         <else>
           <group delimiter=", ">
             <text variable="title"/>
@@ -120,7 +122,6 @@
           <text value="."/>
         </else>
       </choose>
-
     </layout>
   </bibliography>
 
