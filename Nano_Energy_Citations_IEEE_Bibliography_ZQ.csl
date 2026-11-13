@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0.2" class="in-text" default-locale="en-US">
+  <info>
+    <title>Nano Energy In-Text + IEEE Bibliography (Custom ZQ)</title>
+    <id>http://www.zotero.org/styles/nano-energy-in-text-ieee-bibliography-zq</id>
+    <link href="http://www.zotero.org/styles/nano-energy-in-text-ieee-bibliography-zq" rel="self"/>
+    <author><name>Custom hybrid style prepared for the user</name></author>
+    <category citation-format="numeric"/>
+    <category field="engineering"/>
+    <summary>Non-superscripted square-bracket numeric citations with IEEE-style journal bibliography formatting.</summary>
+    <updated>2026-11-13T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This CSL style is provided for adaptation.</rights>
+  </info>
+
+  <macro name="author">
+    <names variable="author">
+      <name and="text" et-al-min="7" et-al-use-first="1" initialize-with=". "/>
+      <et-al font-style="italic"/>
+      <substitute><names variable="editor"/><names variable="translator"/><text variable="title"/></substitute>
+    </names>
+  </macro>
+  <macro name="title"><text variable="title" quotes="true"/></macro>
+  <macro name="journal"><text variable="container-title" form="short" font-style="italic"/></macro>
+  <macro name="volume-issue">
+    <group delimiter=", ">
+      <text variable="volume" prefix="vol. "/>
+      <text variable="issue" prefix="no. "/>
+    </group>
+  </macro>
+  <macro name="pages">
+    <choose>
+      <if type="article-journal" variable="number" match="all">
+        <group delimiter=" "><text value="Art. no."/><text variable="number"/></group>
+      </if>
+      <else>
+        <group delimiter=" "><label variable="page" form="short"/><text variable="page"/></group>
+      </else>
+    </choose>
+  </macro>
+  <macro name="issued">
+    <date variable="issued"><date-part name="month" form="short" suffix=" "/><date-part name="year"/></date>
+  </macro>
+  <macro name="doi">
+    <choose><if variable="DOI"><text variable="DOI" prefix="doi: " suffix="."/></if></choose>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort><key variable="citation-number"/></sort>
+    <layout prefix="[" suffix="]" delimiter=", "><text variable="citation-number"/></layout>
+  </citation>
+
+  <bibliography et-al-min="7" et-al-use-first="1" second-field-align="flush">
+    <layout>
+      <text variable="citation-number" prefix="[" suffix="] "/>
+      <text macro="author" suffix=", "/>
+      <choose>
+        <if type="article-journal">
+          <group delimiter=", ">
+            <text macro="title"/>
+            <text macro="journal"/>
+            <text macro="volume-issue"/>
+            <text macro="pages"/>
+            <text macro="issued"/>
+          </group>
+          <text value="."/>
+          <text macro="doi" prefix=" "/>
+        </if>
+        <else>
+          <group delimiter=", ">
+            <text variable="title"/>
+            <text variable="container-title" font-style="italic"/>
+            <text macro="issued"/>
+          </group>
+          <text value="."/>
+          <text macro="doi" prefix=" "/>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
