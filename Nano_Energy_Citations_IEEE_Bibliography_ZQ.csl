@@ -60,7 +60,7 @@
       </if>
     </choose>
   </macro>
-
+<citation>
   <citation collapse="citation-number">
     <sort>
       <key variable="citation-number"/>
@@ -76,7 +76,7 @@
     <text variable="citation-number"/>
   </layout>
 </citation>
-
+<bibliography>
   <bibliography second-field-align="flush">
     <layout>
       <text variable="citation-number" prefix="[" suffix="] "/>
