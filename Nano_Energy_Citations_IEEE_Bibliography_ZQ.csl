@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl"
-<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="en-US">
+       version="1.0.2"
+       class="in-text"
+       default-locale="en-US">
+
   <info>
-    <title>Nano Energy + IEEE ZQ</title>
-    <id>http://www.zotero.org/styles/nano-energy-ieee-zq</id>
-    <link href="http://www.zotero.org/styles/nano-energy-ieee-zq" rel="self"/>
-    <author><name>Custom style prepared for ZQ</name></author>
+    <title>Nano Energy Citations + IEEE Bibliography ZQ</title>
+    <id>http://www.zotero.org/styles/nano-energy-ieee-zq-v2</id>
+    <link href="http://www.zotero.org/styles/nano-energy-ieee-zq-v2" rel="self"/>
+    <author>
+      <name>Custom style prepared for ZQ</name>
+    </author>
     <category citation-format="numeric"/>
     <category field="engineering"/>
-    <summary>Square bracket citations with IEEE-inspired bibliography.</summary>
+    <summary>
+      Square bracket numeric citations with collapsed citation ranges
+      and IEEE-inspired bibliography formatting.
+    </summary>
     <updated>2026-11-13T00:00:00+00:00</updated>
   </info>
 
+  <!-- AUTHOR FORMAT -->
   <macro name="author">
-    <names variable="author">
-      <name and="text" initialize-with=". "/>
+    <names variable="author" et-al-min="7" et-al-use-first="6">
+      <name initialize-with=". "
+            and="text"
+            delimiter=", "
+            delimiter-precedes-last="always"/>
+      <et-al/>
       <substitute>
         <names variable="editor"/>
         <text variable="title"/>
@@ -22,22 +35,26 @@
     </names>
   </macro>
 
+  <!-- ARTICLE TITLE -->
   <macro name="article-title">
     <text variable="title" quotes="true"/>
   </macro>
 
+  <!-- JOURNAL TITLE -->
   <macro name="journal-title">
     <text variable="container-title" font-style="italic"/>
   </macro>
 
-  <macro name="volume-and-issue">
+  <!-- VOLUME AND ISSUE -->
+  <macro name="volume-issue">
     <group delimiter=", ">
       <text variable="volume" prefix="vol. "/>
       <text variable="issue" prefix="no. "/>
     </group>
   </macro>
 
-  <macro name="page-or-article-number">
+  <!-- PAGE RANGE OR ARTICLE NUMBER -->
+  <macro name="pages">
     <choose>
       <if variable="page">
         <text variable="page" prefix="pp. "/>
@@ -48,12 +65,14 @@
     </choose>
   </macro>
 
-  <macro name="publication-year">
+  <!-- PUBLICATION YEAR -->
+  <macro name="year">
     <date variable="issued">
       <date-part name="year"/>
     </date>
   </macro>
 
+  <!-- DOI -->
   <macro name="doi">
     <choose>
       <if variable="DOI">
@@ -61,7 +80,8 @@
       </if>
     </choose>
   </macro>
-<citation>
+
+  <!-- IN-TEXT CITATIONS -->
   <citation collapse="citation-number">
     <sort>
       <key variable="citation-number"/>
@@ -69,37 +89,36 @@
     <layout prefix="[" suffix="]" delimiter=", ">
       <text variable="citation-number"/>
     </layout>
- <citation collapse="citation-number">
-  <sort>
-    <key variable="citation-number"/>
-  </sort>
-  <layout prefix="[" suffix="]" delimiter=", ">
-    <text variable="citation-number"/>
-  </layout>
-</citation>
-<bibliography>
+  </citation>
+
+  <!-- REFERENCE LIST -->
   <bibliography second-field-align="flush">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
     <layout>
       <text variable="citation-number" prefix="[" suffix="] "/>
       <text macro="author" suffix=", "/>
+
       <choose>
         <if type="article-journal">
           <group delimiter=", ">
             <text macro="article-title"/>
             <text macro="journal-title"/>
-            <text macro="volume-and-issue"/>
-            <text macro="page-or-article-number"/>
-            <text macro="publication-year"/>
+            <text macro="volume-issue"/>
+            <text macro="pages"/>
+            <text macro="year"/>
           </group>
           <text value="."/>
           <text macro="doi" prefix=" "/>
           <text value="."/>
         </if>
+
         <else>
           <group delimiter=", ">
             <text variable="title"/>
             <text variable="container-title" font-style="italic"/>
-            <text macro="publication-year"/>
+            <text macro="year"/>
           </group>
           <text value="."/>
           <text macro="doi" prefix=" "/>
@@ -108,4 +127,5 @@
       </choose>
     </layout>
   </bibliography>
+
 </style>
