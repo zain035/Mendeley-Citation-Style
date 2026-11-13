@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl"
        version="1.0"
@@ -5,25 +6,27 @@
        default-locale="en-US">
 
   <info>
-    <title>Nano Energy Citations + IEEE Bibliography ZQ</title>
-    <id>http://www.zotero.org/styles/nano-energy-ieee-zq-v4</id>
-    <link href="http://www.zotero.org/styles/nano-energy-ieee-zq-v4" rel="self"/>
+    <title>Nano Energy In-Text + IEEE Bibliography ZQ</title>
+    <id>http://www.zotero.org/styles/nano-energy-ieee-zq-v5</id>
+    <link href="http://www.zotero.org/styles/nano-energy-ieee-zq-v5" rel="self"/>
     <author>
       <name>Custom style prepared for ZQ</name>
     </author>
     <category citation-format="numeric"/>
     <category field="engineering"/>
-    <summary>Square bracket citations with collapsed numerical ranges and IEEE-inspired bibliography.</summary>
+    <summary>Square bracket citations with compressed numerical ranges and IEEE-inspired bibliography.</summary>
     <updated>2026-11-13T00:00:00+00:00</updated>
   </info>
 
-  <!-- AUTHORS -->
+  <!-- AUTHOR FORMATTING -->
   <macro name="author">
     <names variable="author">
       <name initialize-with=". "
-            delimiter=", "
             and="text"
-            delimiter-precedes-last="always"/>
+            delimiter=", "
+            delimiter-precedes-last="never"
+            et-al-min="7"
+            et-al-use-first="6"/>
       <et-al/>
       <substitute>
         <names variable="editor"/>
@@ -88,16 +91,15 @@
     </layout>
   </citation>
 
-  <!-- IEEE-INSPIRED BIBLIOGRAPHY -->
-  <bibliography et-al-min="7"
-                et-al-use-first="6"
-                second-field-align="flush">
+  <!-- BIBLIOGRAPHY -->
+  <bibliography second-field-align="flush">
     <sort>
       <key variable="citation-number"/>
     </sort>
     <layout>
       <text variable="citation-number" prefix="[" suffix="] "/>
       <text macro="author" suffix=", "/>
+
       <choose>
         <if type="article-journal">
           <group delimiter=", ">
@@ -111,6 +113,7 @@
           <text macro="doi" prefix=" "/>
           <text value="."/>
         </if>
+
         <else>
           <group delimiter=", ">
             <text variable="title"/>
