@@ -5,16 +5,16 @@
        default-locale="en-US">
 
   <info>
-    <title>Nano Energy Citations + IEEE Bibliography ZQ</title>
-    <id>http://www.zotero.org/styles/nano-energy-ieee-zq-v2</id>
-    <link href="http://www.zotero.org/styles/nano-energy-ieee-zq-v2" rel="self"/>
+    <title>Nano Energy + IEEE Bibliography ZQ</title>
+    <id>http://www.zotero.org/styles/nano-energy-ieee-zq-v3</id>
+    <link href="http://www.zotero.org/styles/nano-energy-ieee-zq-v3" rel="self"/>
     <author>
       <name>Custom style prepared for ZQ</name>
     </author>
     <category citation-format="numeric"/>
     <category field="engineering"/>
     <summary>
-      Square bracket numeric citations with collapsed citation ranges
+      Square bracket citations with compressed numerical ranges
       and IEEE-inspired bibliography formatting.
     </summary>
     <updated>2026-11-13T00:00:00+00:00</updated>
@@ -22,10 +22,12 @@
 
   <!-- AUTHOR FORMAT -->
   <macro name="author">
-    <names variable="author" et-al-min="7" et-al-use-first="6">
+    <names variable="author"
+           et-al-min="7"
+           et-al-use-first="6">
       <name initialize-with=". "
-            and="text"
             delimiter=", "
+            and="text"
             delimiter-precedes-last="always"/>
       <et-al/>
       <substitute>
@@ -53,19 +55,12 @@
     </group>
   </macro>
 
-  <!-- PAGE RANGE OR ARTICLE NUMBER -->
+  <!-- PAGES OR ARTICLE NUMBER -->
   <macro name="pages">
-    <choose>
-      <if variable="page">
-        <text variable="page" prefix="pp. "/>
-      </if>
-      <else-if variable="number">
-        <text variable="number" prefix="Art. no. "/>
-      </else-if>
-    </choose>
+    <text variable="page"/>
   </macro>
 
-  <!-- PUBLICATION YEAR -->
+  <!-- YEAR -->
   <macro name="year">
     <date variable="issued">
       <date-part name="year"/>
@@ -91,7 +86,7 @@
     </layout>
   </citation>
 
-  <!-- REFERENCE LIST -->
+  <!-- BIBLIOGRAPHY -->
   <bibliography second-field-align="flush">
     <sort>
       <key variable="citation-number"/>
@@ -125,6 +120,7 @@
           <text value="."/>
         </else>
       </choose>
+
     </layout>
   </bibliography>
 
