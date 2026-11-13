@@ -1,52 +1,80 @@
-<?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0.2" class="in-text" default-locale="en-US">
+from pathlib import Path
+from lxml import etree
+
+csl = '''<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="en-US">
   <info>
-    <title>Nano Energy In-Text + IEEE Bibliography (Custom ZQ)</title>
+    <title>Nano Energy In-Text + IEEE Bibliography (ZQ)</title>
     <id>http://www.zotero.org/styles/nano-energy-in-text-ieee-bibliography-zq</id>
     <link href="http://www.zotero.org/styles/nano-energy-in-text-ieee-bibliography-zq" rel="self"/>
-    <author><name>Custom hybrid style prepared for the user</name></author>
+    <author><name>Custom style prepared for ZQ</name></author>
     <category citation-format="numeric"/>
     <category field="engineering"/>
-    <summary>Non-superscripted square-bracket numeric citations with IEEE-style journal bibliography formatting.</summary>
+    <summary>Square-bracket numeric in-text citations and IEEE-inspired journal article bibliography.</summary>
     <updated>2026-11-13T00:00:00+00:00</updated>
-    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This CSL style is provided for adaptation.</rights>
   </info>
 
   <macro name="author">
-    <names variable="author">
-      <name and="text" et-al-min="7" et-al-use-first="1" initialize-with=". "/>
-      <et-al font-style="italic"/>
-      <substitute><names variable="editor"/><names variable="translator"/><text variable="title"/></substitute>
+    <names variable="author" et-al-min="7" et-al-use-first="1">
+      <name initialize-with=". " and="text"/>
+      <substitute>
+        <names variable="editor"/>
+        <text variable="title"/>
+      </substitute>
     </names>
   </macro>
-  <macro name="title"><text variable="title" quotes="true"/></macro>
-  <macro name="journal"><text variable="container-title" form="short" font-style="italic"/></macro>
+
+  <macro name="article-title">
+    <text variable="title" prefix="&quot;" suffix="&quot;"/>
+  </macro>
+
+  <macro name="journal">
+    <text variable="container-title" font-style="italic"/>
+  </macro>
+
   <macro name="volume-issue">
     <group delimiter=", ">
       <text variable="volume" prefix="vol. "/>
       <text variable="issue" prefix="no. "/>
     </group>
   </macro>
-  <macro name="pages">
+
+  <macro name="pages-or-article-number">
     <choose>
-      <if type="article-journal" variable="number" match="all">
-        <group delimiter=" "><text value="Art. no."/><text variable="number"/></group>
+      <if variable="number">
+        <group delimiter=" ">
+          <text value="Art. no."/>
+          <text variable="number"/>
+        </group>
       </if>
-      <else>
-        <group delimiter=" "><label variable="page" form="short"/><text variable="page"/></group>
-      </else>
+      <else-if variable="page">
+        <text variable="page" prefix="pp. "/>
+      </else-if>
     </choose>
   </macro>
-  <macro name="issued">
-    <date variable="issued"><date-part name="month" form="short" suffix=" "/><date-part name="year"/></date>
+
+  <macro name="date">
+    <date variable="issued">
+      <date-part name="month" form="short" suffix=" "/>
+      <date-part name="year"/>
+    </date>
   </macro>
+
   <macro name="doi">
-    <choose><if variable="DOI"><text variable="DOI" prefix="doi: " suffix="."/></if></choose>
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix="doi: "/>
+      </if>
+    </choose>
   </macro>
 
   <citation collapse="citation-number">
-    <sort><key variable="citation-number"/></sort>
-    <layout prefix="[" suffix="]" delimiter=", "><text variable="citation-number"/></layout>
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter=", ">
+      <text variable="citation-number"/>
+    </layout>
   </citation>
 
   <bibliography et-al-min="7" et-al-use-first="1" second-field-align="flush">
@@ -56,25 +84,33 @@
       <choose>
         <if type="article-journal">
           <group delimiter=", ">
-            <text macro="title"/>
+            <text macro="article-title"/>
             <text macro="journal"/>
             <text macro="volume-issue"/>
-            <text macro="pages"/>
-            <text macro="issued"/>
+            <text macro="pages-or-article-number"/>
+            <text macro="date"/>
           </group>
           <text value="."/>
           <text macro="doi" prefix=" "/>
+          <text value="."/>
         </if>
         <else>
           <group delimiter=", ">
             <text variable="title"/>
             <text variable="container-title" font-style="italic"/>
-            <text macro="issued"/>
+            <text macro="date"/>
           </group>
           <text value="."/>
           <text macro="doi" prefix=" "/>
+          <text value="."/>
         </else>
       </choose>
     </layout>
   </bibliography>
 </style>
+'''
+# Ensure the XML is well-formed before saving.
+etree.fromstring(csl.encode("utf-8"))
+p = Path("/mnt/data/Nano_Energy_IEEE_Mendeley_CSL_fixed.csl")
+p.write_text(csl, encoding="utf-8")
+print(f"Created and XML-parsed successfully: {p}")
