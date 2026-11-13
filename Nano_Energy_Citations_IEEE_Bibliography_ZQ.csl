@@ -61,7 +61,7 @@
     </choose>
   </macro>
 
-  <citation>
+  <citation collapse="citation-number">
     <sort>
       <key variable="citation-number"/>
     </sort>
